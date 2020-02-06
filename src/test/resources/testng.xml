@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<suite name="Login suite demo" thread-count="10" parallel="tests" >
+    <parameter name = "SauceLabUser" value = "tomsmith"/>
+
+    <test name = "Valid credetials">
+        <parameter name = "SauceLabPass" value = "SuperSecretPassword!"/>
+        <classes>
+            <class name = "tau.selenium.saucedemo.tests.LoginTest"/>
+        </classes>
+    </test>
+
+    <test name = "Invalid password">
+        <parameter name = "SauceLabPass" value = "SuperSecretPassword!2"/>
+        <classes>
+            <class name = "tau.selenium.saucedemo.tests.LoginTest"/>
+        </classes>
+    </test>
+
+</suite> <!-- Login test suite -->
