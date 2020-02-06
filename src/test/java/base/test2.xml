@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DiameterConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:noNamespaceSchemaLocation="DiameterConfig.xsd">
+    <Gx>
+        <!-- AVP mandatoryFlag="true" name="RatType"/>
+        <AVP mandatoryFlag="true" name="SupportedFeatures"/>
+        <GroupedAVP mandatoryFlag="false" name="SupportedFeatures" >
+            <AVP mandatoryFlag="false" name="FeatureList"/>
+            <AVP mandatoryFlag="true" name="FeatureListID"/>
+            <AVP mandatoryFlag="true" name="VendorId"/>
+        </GroupedAVP>
+        <GroupedAVP mandatoryFlag="true" name="UserEquipmentInfoImeisv" >
+            <AVP mandatoryFlag="false" name="UserEquipmentInfoType"/>
+            <AVP mandatoryFlag="true" name="UserEquipmentInfoValue"/>
+        </GroupedAVP>
+        <GroupedAVP mandatoryFlag="true" name="UsageMonitoringInformation" >
+            <AVP mandatoryFlag="false" name="MonitoringKey"/>
+                <GroupedAVP mandatoryFlag="true" name="UsedServiceUnit" >
+                        <AVP mandatoryFlag="false" name="CcTotalOctets"/>
+                </GroupedAVP>
+        </GroupedAVP-->
+        <Result-Codes>
+            <Result-Codes>
+                <DefaultBehavior action="Block"/>
+                <ResultCode name="DIAMETER_MULTI_ROUND_AUTH" code="1001" action="Block"/>
+                <ResultCode name="DIAMETER_RESOURCES_EXCEEDED" code="5006" action="Block" retries="2"/>
+                <ResultCode name="DIAMETER_INVALID_AVP_VALUE" code="5004" action="Ignore" retries="2"/>
+                <ResultCode name="DIAMETER_MISSING_AVP" code="5005" action="Ignore"/>
+                <ResultCode name="DIAMETER_MISSING_INVALID" code="8" action="Block"/>
+            </Result-Codes>
+        </Result-Codes>
+
+    </Gx>
+    <Gy>
+        <Result-Codes>
+            <DefaultBehavior action="Ignore" level="session"/>
+            <DefaultBehavior action="Ignore" level="application"/>
+            <ResultCode name="DIAMETER_CREDIT_LIMIT_REACHED" code="4012" action="Block" level="session"/>
+            <ResultCode name="DIAMETER_CREDIT_LIMIT_REACHED" code="4012" action="Block" level="application"/>
+
+        </Result-Codes>
+        <!-- Dynamic Charging multiple gy clients configuration -->
+        <!--ConnectionMappings>
+               <UriStringDelimiter value=";"/>
+               <DefaultConnection fileName="gy_client.xml"/>
+               <Connection primaryUriName="aaa://172.18.11.62:51122" secondaryUriName="" fileName="gy_client_1.xml"/>
+               <Connection primaryUriName="kuku" secondaryUriName="kuku" fileName="gy_client_2.xml"/>
+          </ConnectionMappings-->
+    </Gy>
+    <Sd>
+        <Result-Codes>
+            <DefaultBehavior action="Ignore"/>
+        </Result-Codes>
+        <SdEnabled value="false"/>
+        <HostNameType value="MSISDN"/>  <!-- MSISDN / IMSI -->
+        <HostNameSrc value="MSISDN"/>  <!-- MSISDN / IMSI -->
+    </Sd>
+</DiameterConfig>
