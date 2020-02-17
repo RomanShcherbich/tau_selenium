@@ -6,7 +6,6 @@ import org.openqa.selenium.WebDriver;
 public class SecuredPage extends BasePage {
 
   private By alert = new By.ById("flash");
-  private String alertSecureText = "You logged into a secure area!";
 
   private By buttonLogout = new By.ByXPath("//a[contains(@class,'button')]/i");
   private String buttonLogoutText = "Logout";
@@ -15,7 +14,7 @@ public class SecuredPage extends BasePage {
     super.driver = driver;
   }
 
-  public void validateSecurePage() {
+  public void validateSecurePage(String alertSecureText) {
     verifyText(alertSecureText,alert);
     verifyElement(buttonLogout);
   }

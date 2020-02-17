@@ -25,6 +25,10 @@ public class LoginPage extends BasePage{
     return new SecuredPage(driver);
   }
 
+  public String getLoginButtonText() {
+    return getElementText(loginButton);
+  }
+
   public void validateLoginPage() {
     verifyElement(usernameField);
   }

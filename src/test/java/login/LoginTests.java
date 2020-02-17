@@ -1,44 +1,57 @@
 package login;
 
 import base.BaseTests;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 import pages.HomePage;
 import pages.LoginPage;
 import pages.SecuredPage;
 
+import java.security.SecureRandom;
+
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
 public class LoginTests extends BaseTests {
 
+  private static LoginPage loginPage;
+  private static SecuredPage securedPage;
 
-  public static void main(String[] args) {
-    LoginTests test = new LoginTests();
-
-    test.setUp();
-    test.testSuccessfulLogin();
-    driver.quit();
-
-//    test.setUp();
-//    test.testSuccessfulLogout();
-//    driver.quit();
+  @BeforeClass
+  public void beforeClass()
+  {
+    super.beforeClass();
+    loginPage = new HomePage(driver).clickFormAuthentication();
+    System.out.println("Open Form Authentication");
   }
 
+  @BeforeMethod
+  public void beforeMethod()
+  {
+  }
+
+ @Test
   public void testSuccessfulLogin() {
-    LoginPage loginPage = new HomePage(driver).clickFormAuthentication();
-    loginPage.validateLoginPage();
-    SecuredPage securedPage = loginPage.loginValid();
+   loginPage.validateLoginPage();
+   securedPage = loginPage.loginValid();
+   System.out.println("Sign In");
 //    securedPage.validateSecurePage();
-    assertEquals(securedPage.getAlertText(), "You logged into a secure area!\n×", "Alert text is incorrect");
+    assertTrue(securedPage.getAlertText().contains("You logged into a secure area!"), "Alert text is incorrect");
+   System.out.println("Check success login");
   }
 
+  @Test
   public void testSuccessfulLogout() {
-    LoginPage loginPage = new HomePage(driver).clickFormAuthentication();
-    loginPage.validateLoginPage();
+    securedPage.logout();
+    System.out.println("Sign Out");
+    assertEquals(loginPage.getLoginButtonText(), "Login", "Login Button Text text is incorrect");
+    System.out.println("Check success logout");
+  }
 
-    SecuredPage securedPage = loginPage.loginValid();
-
-    securedPage.validateSecurePage();
-    loginPage = securedPage.logout();
-    loginPage.validateLoginPage();
+  @AfterMethod
+  public void afterMethod()
+  {
   }
 }

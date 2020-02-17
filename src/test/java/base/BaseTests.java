@@ -7,7 +7,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterSuite;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.BeforeTest;
 import pages.HomePage;
 import pages.LoginPage;
 import pages.SecuredPage;
@@ -16,13 +20,29 @@ public class BaseTests {
 
   protected static WebDriver driver;
 
-  @BeforeClass
-  public void setUp(){
+  @BeforeSuite
+  public void beforeSuite()
+  {
     String webDriverProp = Config.WEB_CHROME_DRIVER;
     System.setProperty(webDriverProp, Config.getProperty(webDriverProp));
+    System.out.println("Chrome - Set Up System Property");
+  }
+
+
+  @BeforeTest
+  public void beforeTest()
+  {
     driver = new ChromeDriver();
+    System.out.println("Open Chrome");
+  }
+
+
+  @BeforeClass
+  public void beforeClass(){
     driver.get("https://the-internet.herokuapp.com/");
-    System.out.println(driver.getTitle());
+    System.out.println("Open Test Application");
+
+    sleepSec(1);
     /*
     driver.manage().window().maximize();
     sleepSec(1);
@@ -41,9 +61,24 @@ public class BaseTests {
   }
 
   @AfterClass
-  public void tearDown() {
+  public void afterClass()
+  {
+    System.out.println("Close Test Application");
+  }
+
+  @AfterTest
+  public void afterTest()
+  {
+    System.out.println("Close Chrome");
+    driver.close();
+  }
+
+  @AfterSuite
+  public void afterSuite() {
+    System.out.println("Chrome - Clean Up All Cookies");
     driver.quit();
   }
+
 
   private void sleepSec(int seconds) {
     try {
