@@ -20,29 +20,28 @@ public class BaseTests {
 
   protected static WebDriver driver;
 
-  @BeforeSuite
-  public void beforeSuite()
-  {
-    String webDriverProp = Config.WEB_CHROME_DRIVER;
-    System.setProperty(webDriverProp, Config.getProperty(webDriverProp));
-    System.out.println("Chrome - Set Up System Property");
-  }
+//  @BeforeSuite
+//  public void OpenChromeDriver()
+//  {
+//  }
 
 
   @BeforeTest
   public void beforeTest()
   {
+    String webDriverProp = Config.WEB_CHROME_DRIVER;
+    System.setProperty(webDriverProp, Config.getProperty(webDriverProp));
+    System.out.println("Chrome - Set Up System Property");
     driver = new ChromeDriver();
     System.out.println("Open Chrome");
+    driver.get("https://the-internet.herokuapp.com/");
+    System.out.println("Open Test Application");
   }
 
 
   @BeforeClass
   public void beforeClass(){
-    driver.get("https://the-internet.herokuapp.com/");
-    System.out.println("Open Test Application");
-
-    sleepSec(1);
+//    sleepSec(1);
     /*
     driver.manage().window().maximize();
     sleepSec(1);
@@ -71,13 +70,13 @@ public class BaseTests {
   {
     System.out.println("Close Chrome");
     driver.close();
-  }
-
-  @AfterSuite
-  public void afterSuite() {
     System.out.println("Chrome - Clean Up All Cookies");
     driver.quit();
   }
+
+//  @AfterSuite
+//  public void afterSuite() {
+//  }
 
 
   private void sleepSec(int seconds) {

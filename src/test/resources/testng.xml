@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<suite name="Login test suite">
+    <parameter name = "username" value = "tomsmith"/>
+
+    <test name = "Valid credetials">
+        <parameter name = "password" value = "SuperSecretPassword!"/>
+        <parameter name = "alert" value = "You logged into a secure area!"/>
+        <classes>
+            <class name = "login.LoginTests"/>
+        </classes>
+    </test>
+
+    <test name = "Invalid password">
+        <parameter name = "password" value = "SuperSecretPassword!2"/>
+        <parameter name = "alert" value = "Your password is invalid!"/>
+        <classes>
+            <class name = "login.LoginTests"/>
+        </classes>
+    </test>
+
+</suite> <!-- Login test suite -->

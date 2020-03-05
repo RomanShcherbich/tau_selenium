@@ -15,12 +15,9 @@ public class LoginPage extends BasePage{
   private By loginButton = By.xpath("//button[contains(@class,'radius')]/i");
   private String loginButtonText = "Login";
 
-  private String usernameValid = "tomsmith";
-  private String passwordValid = "SuperSecretPassword!";
-
-  public SecuredPage loginValid() {
-    putText(usernameValid,usernameField);
-    putText(passwordValid,passwordField);
+  public SecuredPage loginValid(String username, String password) {
+    putText(username,usernameField);
+    putText(password,passwordField);
     buttonClick(loginButtonText, loginButton);
     return new SecuredPage(driver);
   }
