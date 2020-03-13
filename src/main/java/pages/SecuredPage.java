@@ -2,6 +2,7 @@ package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 
 public class SecuredPage extends BasePage {
 
@@ -14,8 +15,7 @@ public class SecuredPage extends BasePage {
     super(driver);
   }
 
-  public void validateSecurePage(String alertSecureText) throws Exception {
-    verifyElementText(alertSecureText,alert);
+  public void validateSecurePage() {
     verifyElement(buttonLogout);
   }
 
@@ -23,7 +23,7 @@ public class SecuredPage extends BasePage {
     return getElementText(alert);
   }
 
-  public LoginPage logout() throws Exception {
+  public LoginPage logout() throws WebDriverException {
     verifyElementText(buttonLogoutText,buttonLogout);
     buttonClick(buttonLogout);
     return new LoginPage(getDriver());

@@ -2,10 +2,10 @@ package login;
 
 import base.BaseTests;
 import org.apache.log4j.Logger;
+import org.openqa.selenium.WebDriverException;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
-import org.testng.asserts.SoftAssert;
 import pages.HomePage;
 import pages.LoginPage;
 import pages.SecuredPage;
@@ -16,7 +16,6 @@ public class LoginTests extends BaseTests {
 
   private static LoginPage loginPage;
   protected static SecuredPage securedPage;
-  private static SoftAssert softAssert = new SoftAssert();
 
   @BeforeClass
   public void beforeClass() {
@@ -25,21 +24,27 @@ public class LoginTests extends BaseTests {
   }
 
   @Test
-  @Parameters({"username", "password","alert"})
-  public void testLogin(String username, String password, String expectedAlert) {
-    loginPage.validateLoginPage();
+  @Parameters({"casetype","username", "password","alert"})
+  public void testLogin(String casetype,String username, String password, String expectedAlert) {
+    loginPage.verifyLoginPage();
+
     try {
-      securedPage = loginPage.loginValid(username, password);
-    } catch (Exception e) {
+      loginPage.verifyLoginButtonText();
+    } catch (WebDriverException e) {
       softAssert.fail(e.getMessage());
     }
-    log.info("Sign In");
+    String actualAlert;
 
-    String actualAlert = securedPage.getAlertText();
-    softAssert.assertEquals(actualAlert.substring(0, actualAlert.indexOf("!") + 1), expectedAlert
+    if(casetype.equals("invalid data")) {
+      actualAlert = loginPage.getAlertText();
+    } else {
+      securedPage = loginPage.loginValid(username, password);
+      actualAlert = securedPage.getAlertText();
+    }
+
+    softAssert.assertEquals(expectedAlert, actualAlert.substring(0, actualAlert.indexOf("!") + 1)
         , "Alert text is incorrect");
-    softAssert.assertAll();
-
+    securedPage.validateSecurePage();
     log.info("Check success login");
   }
 }

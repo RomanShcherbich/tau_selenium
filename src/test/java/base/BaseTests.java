@@ -8,12 +8,13 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeTest;
+import org.testng.asserts.SoftAssert;
 import pages.BasePage;
 
 public class BaseTests {
 
   protected static final Logger log = Logger.getLogger(BaseTests.class);
-
+  protected static SoftAssert softAssert = new SoftAssert();
   protected static WebDriver driver;
 
   @BeforeTest
@@ -24,7 +25,7 @@ public class BaseTests {
     log.info("Chrome - Set Up System Property");
     driver = new ChromeDriver();
     log.info("Open Chrome");
-    driver.manage().window().maximize();
+//    driver.manage().window().maximize();
     driver.get("https://the-internet.herokuapp.com/");
     log.info("Open Test Application");
   }

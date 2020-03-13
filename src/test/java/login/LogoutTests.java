@@ -27,7 +27,7 @@ public class LogoutTests extends BaseTests {
   public void testLogout() {
     try {
       LoginPage loginPage = securedPage.logout();
-      softAssert.assertEquals(loginPage.getLoginButtonText(), "Login", "Login Button Text text is incorrect");
+      loginPage.verifyLoginButtonText();
     } catch (Exception e) {
       softAssert.fail(e.getMessage());
     }

@@ -8,7 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 
-public class BasePage extends AbstractPage{
+public class BasePage extends AbstractPage {
 
   private static final Logger log = Logger.getLogger(BasePage.class);
 
@@ -20,27 +20,47 @@ public class BasePage extends AbstractPage{
     getWait().until(ExpectedConditions.visibilityOfElementLocated(by));
   }
 
-  protected void putText(String text, By textField) {
+  private String getElementDescription(WebElement webElement) {
+    String description = "";
+    String id = webElement.getAttribute("id");
+
+    if (id.isEmpty() || id == null) {
+      description = "tag: " + webElement.getTagName();
+    } else {
+      description = "id: " + id;
+    }
+    return description;
+  }
+
+  protected String putText(String text, By textField) {
     waitElementIsVisible(textField);
-    getDriver().findElement(textField).sendKeys(text);
+    WebElement webElement = getDriver().findElement(textField);
+    webElement.sendKeys(text);
+
+    return "Element with "+ getElementDescription(webElement) + " -> send keys: " + text;
   }
 
-  protected void buttonClick(By button) {
-    waitElementIsVisible(button);
-    getDriver().findElement(button).click();
+  protected String buttonClick(By by) {
+    waitElementIsVisible(by);
+    WebElement button = getDriver().findElement(by);
+    String buttonDescription = getElementDescription(button);
+    button.click();
+    return "Element with "+ buttonDescription + " -> click";
   }
 
-  protected void verifyElementText(String text, By locator) throws Exception {
+  protected void verifyElementText(String text, By locator) throws WebDriverException {
+    waitElementIsVisible(locator);
     String textElement = getDriver().findElement(locator).getText();
     if (!textElement.equals(text)) {
       String message = "invalid text of element.\nExpected:" + text
           + "\nActual:" + textElement;
       log.error(message);
-      throw new Exception(message);
+      throw new WebDriverException(message);
     }
   }
 
   protected void verifyElement(By locator) {
+    waitElementIsVisible(locator);
     WebElement textElement = getDriver().findElement(locator);
     if (!textElement.isDisplayed()) {
       String message = "there is no element by locator:" + locator.toString();
