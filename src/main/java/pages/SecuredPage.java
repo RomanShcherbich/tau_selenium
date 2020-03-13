@@ -11,11 +11,11 @@ public class SecuredPage extends BasePage {
   private String buttonLogoutText = "Logout";
 
   public SecuredPage(WebDriver driver) {
-    super.driver = driver;
+    super(driver);
   }
 
-  public void validateSecurePage(String alertSecureText) {
-    verifyText(alertSecureText,alert);
+  public void validateSecurePage(String alertSecureText) throws Exception {
+    verifyElementText(alertSecureText,alert);
     verifyElement(buttonLogout);
   }
 
@@ -23,8 +23,9 @@ public class SecuredPage extends BasePage {
     return getElementText(alert);
   }
 
-  public LoginPage logout() {
-    buttonClick(buttonLogoutText,buttonLogout);
-    return new LoginPage(driver);
+  public LoginPage logout() throws Exception {
+    verifyElementText(buttonLogoutText,buttonLogout);
+    buttonClick(buttonLogout);
+    return new LoginPage(getDriver());
   }
 }

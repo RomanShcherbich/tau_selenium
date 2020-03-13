@@ -3,18 +3,25 @@
 
 <suite name="Login test suite">
     <parameter name = "username" value = "tomsmith"/>
+    <parameter name = "password" value = "SuperSecretPassword!"/>
 
     <test name = "Valid credetials">
-        <parameter name = "password" value = "SuperSecretPassword!"/>
         <parameter name = "alert" value = "You logged into a secure area!"/>
+        <classes>
+            <class name = "login.LoginTests"/>
+            <class name = "login.LogoutTests"/>
+        </classes>
+    </test>
+    <test name = "Invalid password">
+        <parameter name = "password" value = "SuperSecretPassword!2"/>
+        <parameter name = "alert" value = "Your password is invalid!"/>
         <classes>
             <class name = "login.LoginTests"/>
         </classes>
     </test>
-
-    <test name = "Invalid password">
-        <parameter name = "password" value = "SuperSecretPassword!2"/>
-        <parameter name = "alert" value = "Your password is invalid!"/>
+    <test name = "Invalid username">
+        <parameter name = "username" value = "tomsmith2"/>
+        <parameter name = "alert" value = "Your username is invalid!"/>
         <classes>
             <class name = "login.LoginTests"/>
         </classes>

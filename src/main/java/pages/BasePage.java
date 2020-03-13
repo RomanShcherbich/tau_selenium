@@ -1,45 +1,55 @@
 package pages;
 
+import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
-import validation.WebDriverLog;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
-public class BasePage {
-  WebDriver driver;
-  public WebDriverLog log;
 
-  public BasePage() {
-    if(log==null) {
+public class BasePage extends AbstractPage{
 
-    }
+  private static final Logger log = Logger.getLogger(BasePage.class);
+
+  public BasePage(WebDriver driver) {
+    super(driver);
+  }
+
+  private void waitElementIsVisible(By by) {
+    getWait().until(ExpectedConditions.visibilityOfElementLocated(by));
   }
 
   protected void putText(String text, By textField) {
-    driver.findElement(textField).sendKeys(text);
+    waitElementIsVisible(textField);
+    getDriver().findElement(textField).sendKeys(text);
   }
 
-  protected void buttonClick(String buttonText, By button) {
-    verifyText(buttonText, button);
-    driver.findElement(button).click();
+  protected void buttonClick(By button) {
+    waitElementIsVisible(button);
+    getDriver().findElement(button).click();
   }
 
-  protected void verifyText(String text, By locator) {
-    String textElement = driver.findElement(locator).getText();
+  protected void verifyElementText(String text, By locator) throws Exception {
+    String textElement = getDriver().findElement(locator).getText();
     if (!textElement.equals(text)) {
-      System.out.println("ERROR invalid text of element.\nExpected:" + text
-          + "\nActual:" + textElement);
+      String message = "invalid text of element.\nExpected:" + text
+          + "\nActual:" + textElement;
+      log.error(message);
+      throw new Exception(message);
     }
   }
 
   protected void verifyElement(By locator) {
-    WebElement textElement = driver.findElement(locator);
+    WebElement textElement = getDriver().findElement(locator);
     if (!textElement.isDisplayed()) {
-      System.out.println("ERROR there is no element by locator:" + locator.toString());
+      String message = "there is no element by locator:" + locator.toString();
+      log.error(message);
+      throw new WebDriverException(message);
     }
   }
 
   protected String getElementText(By locator) {
-    return driver.findElement(locator).getText();
+    return getDriver().findElement(locator).getText();
   }
 }

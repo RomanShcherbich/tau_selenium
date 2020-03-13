@@ -6,20 +6,20 @@ import org.openqa.selenium.WebDriver;
 public class LoginPage extends BasePage{
 
   public LoginPage(WebDriver driver) {
-    super.driver = driver;
+    super(driver);
   }
 
   private By usernameField = By.xpath("//input[contains(@name,'username')]");
   private By passwordField = By.xpath("//input[contains(@name,'password')]");
 
   private By loginButton = By.xpath("//button[contains(@class,'radius')]/i");
-  private String loginButtonText = "Login";
+  private String loginButtonText = "Login1";
 
-  public SecuredPage loginValid(String username, String password) {
+  public SecuredPage loginValid(String username, String password) throws Exception {
     putText(username,usernameField);
     putText(password,passwordField);
-    buttonClick(loginButtonText, loginButton);
-    return new SecuredPage(driver);
+    verifyElementText(loginButtonText, loginButton);
+    return new SecuredPage(getDriver());
   }
 
   public String getLoginButtonText() {

@@ -1,0 +1,6 @@
+/lib/
+/target/
+/framework.log
+/Test Results - C__git_tau_selenium_src_test_resources_testng_xml.html
+/.idea
+*.class
