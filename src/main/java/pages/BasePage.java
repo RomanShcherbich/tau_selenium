@@ -2,6 +2,7 @@ package pages;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
@@ -20,42 +21,36 @@ public class BasePage extends AbstractPage {
     getWait().until(ExpectedConditions.visibilityOfElementLocated(by));
   }
 
-  private String getElementDescription(WebElement webElement) {
-    String description = "";
-    String id = webElement.getAttribute("id");
-
-    if (id.isEmpty() || id == null) {
-      description = "tag: " + webElement.getTagName();
-    } else {
-      description = "id: " + id;
-    }
-    return description;
-  }
-
-  protected String putText(String text, By textField) {
+  protected String sendText(String elementName, String text, By textField) {
     waitElementIsVisible(textField);
     WebElement webElement = getDriver().findElement(textField);
     webElement.sendKeys(text);
 
-    return "Element with "+ getElementDescription(webElement) + " -> send keys: " + text;
+    return "Element "+ elementName + " input field -> send keys: " + text;
   }
 
-  protected String buttonClick(By by) {
+  protected String sendFromKeyboard(String elementName, Keys keys, By textField) {
+    waitElementIsVisible(textField);
+    WebElement webElement = getDriver().findElement(textField);
+    webElement.sendKeys(keys);
+
+    return "Element "+ elementName + " input field -> send keys: " + keys.toString();
+  }
+
+  protected String buttonClick(String buttonName, By by) {
     waitElementIsVisible(by);
     WebElement button = getDriver().findElement(by);
-    String buttonDescription = getElementDescription(button);
     button.click();
-    return "Element with "+ buttonDescription + " -> click";
+    return "Button "+ buttonName + " -> click";
   }
 
-  protected void verifyElementText(String text, By locator) throws WebDriverException {
+  protected void verifyElementText(String text, By locator) throws Exception {
     waitElementIsVisible(locator);
     String textElement = getDriver().findElement(locator).getText();
     if (!textElement.equals(text)) {
       String message = "invalid text of element.\nExpected:" + text
           + "\nActual:" + textElement;
-      log.error(message);
-      throw new WebDriverException(message);
+      throw new Exception(message);
     }
   }
 
@@ -70,6 +65,7 @@ public class BasePage extends AbstractPage {
   }
 
   protected String getElementText(By locator) {
+    waitElementIsVisible(locator);
     return getDriver().findElement(locator).getText();
   }
 }

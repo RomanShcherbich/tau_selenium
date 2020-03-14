@@ -1,15 +1,19 @@
 package pages;
 
+import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 
 public class SecuredPage extends BasePage {
 
-  private By alert = new By.ById("flash");
+  private final static Logger log =  Logger.getLogger(SecuredPage.class);
 
   private By buttonLogout = new By.ByXPath("//a[contains(@class,'button')]/i");
-  private String buttonLogoutText = "Logout";
+  public String buttonLogoutText = "Logout";
+
+  private By alert = new By.ById("flash");
+
 
   public SecuredPage(WebDriver driver) {
     super(driver);
@@ -23,9 +27,12 @@ public class SecuredPage extends BasePage {
     return getElementText(alert);
   }
 
-  public LoginPage logout() throws WebDriverException {
-    verifyElementText(buttonLogoutText,buttonLogout);
-    buttonClick(buttonLogout);
+  public String getLogoutButtonText() {
+    return getElementText(buttonLogout);
+  }
+
+  public LoginPage logout() {
+    log.info(buttonClick(buttonLogoutText, buttonLogout));
     return new LoginPage(getDriver());
   }
 }

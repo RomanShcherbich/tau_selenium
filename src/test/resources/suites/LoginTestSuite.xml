@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<suite name="Login test suite">
+    <parameter name="caseType" value="invalid data"/>
+    <parameter name="username" value="tomsmith"/>
+    <parameter name="password" value="SuperSecretPassword!"/>
+
+    <test name="Valid credentials">
+        <parameter name="caseType" value="valid data"/>
+        <parameter name="alert" value="You logged into a secure area!"/>
+        <classes>
+            <class name="login.LoginTests"/>
+            <class name="login.LogoutTests"/>
+        </classes>
+    </test>
+    <test name="Invalid password">
+        <parameter name="password" value="SuperSecretPassword!2"/>
+        <parameter name="alert" value="Your password is invalid!"/>
+        <classes>
+            <class name="login.LoginTests">
+                <methods>
+                    <exclude name="checkLoginButton"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Invalid username">
+        <parameter name="username" value="tomsmith2"/>
+        <parameter name="alert" value="Your username is invalid!"/>
+        <classes>
+            <class name="login.LoginTests">
+                <methods>
+                    <exclude name="checkLoginButton"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>

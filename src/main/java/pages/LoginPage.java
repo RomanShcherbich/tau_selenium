@@ -7,17 +7,18 @@ import org.openqa.selenium.WebDriverException;
 import org.apache.log4j.Logger;
 
 public class LoginPage extends BasePage {
-  private final static Logger log =  Logger.getLogger(LoginPage.class);
 
   public LoginPage(WebDriver driver) {
     super(driver);
   }
 
+  private final static Logger log = Logger.getLogger(LoginPage.class);
+
   private By usernameField = By.xpath("//input[contains(@name,'username')]");
   private By passwordField = By.xpath("//input[contains(@name,'password')]");
 
-  private By loginButton = By.xpath("//button[contains(@class,'radius')]/i");
-  private String loginButtonText = "Login1";
+  private By buttonLogin = By.xpath("//button[contains(@class,'radius')]/i");
+  public String buttonLoginText = "Login";
 
   private By alert = new By.ById("flash");
 
@@ -27,9 +28,9 @@ public class LoginPage extends BasePage {
   }
 
   public void login(String username, String password) {
-    log.info(putText(username, usernameField));
-    log.info(putText(password, passwordField));
-    log.info(buttonClick(loginButton));
+    log.info(sendText("username", username, usernameField));
+    log.info(sendText("password", password, passwordField));
+    log.info(buttonClick(buttonLoginText, buttonLogin));
   }
 
   public String getAlertText() {
@@ -38,13 +39,17 @@ public class LoginPage extends BasePage {
 
   public void verifyLoginButtonText() throws WebDriverException {
     try {
-      verifyElementText(loginButtonText, loginButton);
-    } catch (WebDriverException e) {
+      verifyElementText(buttonLoginText, buttonLogin);
+    } catch (Exception e) {
       throw new WebDriverException("Login button: " + e.getMessage());
     }
   }
 
-  public void verifyLoginPage() {
+  public String getButtonLoginText() {
+    return getElementText(buttonLogin);
+  }
+
+  public void validateLoginPage() {
     verifyElement(usernameField);
   }
 }

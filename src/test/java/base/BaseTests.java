@@ -33,37 +33,22 @@ public class BaseTests {
 
   @BeforeClass
   public void beforeClass(){
-//    sleepSec(1);
-    /*
-    driver.manage().window().maximize();
-    sleepSec(1);
-    List<WebElement> links = driver.findElements(By.xpath("//li/a[@href]"));
-    log.info(links.size());
-    WebElement inputLink = driver.findElement(By.xpath("//li/a[@href='/inputs']"));
-    inputLink.click();
-    driver.navigate().back();
-    WebElement shiftingLink = driver.findElement(By.xpath("//a[@href='/shifting_content']"));
-    shiftingLink.click();
-    WebElement exampleOneLink = driver.findElement(By.xpath("//a[@href='/shifting_content/menu']"));
-    exampleOneLink.click();
-    List<WebElement> menus = driver.findElements(By.xpath("//a[contains(@href,'shifting')]"));
-    log.info(menus.size());
-    */
   }
 
   @AfterClass
   public void afterClass()
   {
-    log.info("Close Test Application");
   }
 
   @AfterTest
   public void afterTest()
   {
+    log.info("Close Test Application");
     log.info("Close Chrome");
     driver.close();
     log.info("Chrome - Clean Up All Cookies");
     driver.quit();
+    softAssert.assertAll();
   }
 
 //  @AfterSuite

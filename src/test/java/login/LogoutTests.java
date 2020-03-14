@@ -1,5 +1,8 @@
 package login;
 
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
+
 import base.BaseTests;
 import org.apache.log4j.Logger;
 import org.testng.annotations.BeforeClass;
@@ -8,8 +11,6 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import pages.LoginPage;
 import pages.SecuredPage;
-
-import static org.testng.Assert.assertEquals;
 
 public class LogoutTests extends BaseTests {
 
@@ -22,17 +23,16 @@ public class LogoutTests extends BaseTests {
     securedPage = new SecuredPage(driver);
   }
 
-  @Test(dependsOnMethods = "login.LoginTests.testLogin")
+  @Test(dependsOnMethods = "login.LoginTests.testLogin", priority = 3)
+  public void checkLogoutButton() {
+    assertEquals(securedPage.getLogoutButtonText(),securedPage.buttonLogoutText);
+  }
+
+  @Test(dependsOnMethods = "login.LoginTests.testLogin", priority = 4)
   @Parameters({"alert"})
   public void testLogout() {
-    try {
-      LoginPage loginPage = securedPage.logout();
-      loginPage.verifyLoginButtonText();
-    } catch (Exception e) {
-      softAssert.fail(e.getMessage());
-    }
-    softAssert.assertAll();
+    LoginPage loginPage = securedPage.logout();
+    loginPage.validateLoginPage();
     log.info("Check success logout");
-
   }
 }
