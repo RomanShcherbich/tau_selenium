@@ -1,8 +1,8 @@
 package pages;
 
+import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 
 public class HomePage extends BasePage{
 
@@ -10,17 +10,28 @@ public class HomePage extends BasePage{
     super(driver);
   }
 
+  private static Logger log = Logger.getLogger(HomePage.class);
+
   private By formAuthenticationLink = By.xpath("//a[contains(@href,'/login')]");
+  private By inputLink = By.xpath("//li/a[@href='/inputs']");
+  private By dropdownLink = By.xpath("//li/a[@href='/dropdown']");
 
   public LoginPage clickFormAuthentication(){
-    WebElement authLink = getDriver().findElement(formAuthenticationLink);
-    authLink.click();
+    clickHomePage("Form Authentication",formAuthenticationLink);
     return new LoginPage(getDriver());
   }
 
   public InputPage clickInput(){
-    WebElement inputLink = getDriver().findElement(By.xpath("//li/a[@href='/inputs']"));
-    inputLink.click();
+    clickHomePage("Inputs", inputLink);
     return new InputPage(getDriver());
+  }
+
+  public DropdownPage clickDropdown(){
+    clickHomePage("Dropdown", dropdownLink);
+    return new DropdownPage(getDriver());
+  }
+
+  private void clickHomePage(String name, By by) {
+    log.info(linkClick(name, by));
   }
 }

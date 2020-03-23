@@ -25,14 +25,14 @@ public class BaseTests {
     log.info("Chrome - Set Up System Property");
     driver = new ChromeDriver();
     log.info("Open Chrome");
-//    driver.manage().window().maximize();
     driver.get("https://the-internet.herokuapp.com/");
     log.info("Open Test Application");
+//    driver.manage().window().maximize();
   }
 
 
   @BeforeClass
-  public void beforeClass(){
+  public void openApplicationUrl(){
   }
 
   @AfterClass

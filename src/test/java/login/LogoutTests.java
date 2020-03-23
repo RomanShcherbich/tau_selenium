@@ -19,7 +19,7 @@ public class LogoutTests extends BaseTests {
   private static SoftAssert softAssert = new SoftAssert();
 
   @BeforeClass
-  public void beforeClass() {
+  public void openApplicationUrl() {
     securedPage = new SecuredPage(driver);
   }
 

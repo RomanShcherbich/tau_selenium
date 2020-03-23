@@ -19,10 +19,6 @@ public class InputPage extends BasePage{
     verifyElement(numbersField);
   }
 
-  public String getNumberFieldText() {
-    return getElementText(numbersFieldText);
-  }
-
   public String getNumberFieldValue() {
     return getDriver().findElement(numbersField).getAttribute("value");
   }

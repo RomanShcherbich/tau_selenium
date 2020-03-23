@@ -44,6 +44,14 @@ public class BasePage extends AbstractPage {
     return "Button "+ buttonName + " -> click";
   }
 
+  protected String linkClick(String linkName, By by) {
+    waitElementIsVisible(by);
+    WebElement link = getDriver().findElement(by);
+    String href = link.getAttribute("href");
+    link.click();
+    return "Link "+ linkName + " -> click \nhref:" + href;
+  }
+
   protected void verifyElementText(String text, By locator) throws Exception {
     waitElementIsVisible(locator);
     String textElement = getDriver().findElement(locator).getText();

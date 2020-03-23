@@ -28,8 +28,8 @@ public class LoginPage extends BasePage {
   }
 
   public void login(String username, String password) {
-    log.info(sendText("username", username, usernameField));
-    log.info(sendText("password", password, passwordField));
+    sendTextLoginPage("username", username, usernameField);
+    sendTextLoginPage("password", password, passwordField);
     log.info(buttonClick(buttonLoginText, buttonLogin));
   }
 
@@ -51,5 +51,10 @@ public class LoginPage extends BasePage {
 
   public void validateLoginPage() {
     verifyElement(usernameField);
+    log.info("It is login page. Validated by username field");
+  }
+
+  private void sendTextLoginPage(String username, String password, By by) {
+    log.info(sendText(username, password, by));
   }
 }

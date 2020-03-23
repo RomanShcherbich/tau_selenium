@@ -19,10 +19,9 @@ public class LoginTests extends BaseTests {
   protected static SecuredPage securedPage;
 
   @BeforeClass
-  public void beforeClass() {
+  public void openApplicationUrl() {
     loginPage = new HomePage(driver).clickFormAuthentication();
     loginPage.validateLoginPage();
-    log.info("Open Form Authentication");
   }
 
   @Test (priority = 1)

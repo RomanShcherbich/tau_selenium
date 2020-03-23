@@ -22,7 +22,6 @@ public class InputTests extends BaseTests {
   public void beforeClass() {
     inputPage = new HomePage(driver).clickInput();
     inputPage.validateInputPage();
-    log.info("Open Inputs");
   }
 
   @BeforeMethod
@@ -45,7 +44,7 @@ public class InputTests extends BaseTests {
 
   @Test
   public void checkRaiseKeys() {
-    Integer index = 3;
+    int index = 3;
     for (int i = 1; i <= index ; i++) {
       inputPage.upNumberField(1);
       softAssert1.assertEquals(String.valueOf(i), inputPage.getNumberFieldValue());
@@ -62,8 +61,8 @@ public class InputTests extends BaseTests {
 
   @Test
   public void checkMultipleManipulations() {
-    Integer value1 = 5;
-    Integer value2 = 3;
+    int value1 = 5;
+    int value2 = 3;
 
     inputPage.sendValueToNumberField(value1);
     inputPage.upNumberField(value2);
