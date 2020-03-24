@@ -1,8 +1,9 @@
-package pages;
+package pages.base;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+/** @noinspection ALL*/
 public abstract class AbstractPage {
   private final static int TIMEOUT = 5;
 

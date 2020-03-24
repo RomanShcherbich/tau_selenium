@@ -1,4 +1,4 @@
-package pages;
+package pages.base;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
@@ -13,16 +13,27 @@ public class BasePage extends AbstractPage {
 
   private static final Logger log = Logger.getLogger(BasePage.class);
 
-  public BasePage(WebDriver driver) {
+  public BasePage(WebDriver driver) throws WebDriverException{
     super(driver);
   }
 
-  private void waitElementIsVisible(By by) {
+  private void waitElementIsDisplayed(By by) {
     getWait().until(ExpectedConditions.visibilityOfElementLocated(by));
+
+    WebElement element = getDriver().findElement(by);
+
+    if (!element.isDisplayed()) {
+      String message = "Element is not displayed";
+      try {
+        throw new Exception(message);
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+    }
   }
 
   protected String sendText(String elementName, String text, By textField) {
-    waitElementIsVisible(textField);
+    waitElementIsDisplayed(textField);
     WebElement webElement = getDriver().findElement(textField);
     webElement.sendKeys(text);
 
@@ -30,7 +41,7 @@ public class BasePage extends AbstractPage {
   }
 
   protected String sendFromKeyboard(String elementName, Keys keys, By textField) {
-    waitElementIsVisible(textField);
+    waitElementIsDisplayed(textField);
     WebElement webElement = getDriver().findElement(textField);
     webElement.sendKeys(keys);
 
@@ -38,14 +49,14 @@ public class BasePage extends AbstractPage {
   }
 
   protected String buttonClick(String buttonName, By by) {
-    waitElementIsVisible(by);
+    waitElementIsDisplayed(by);
     WebElement button = getDriver().findElement(by);
     button.click();
     return "Button "+ buttonName + " -> click";
   }
 
   protected String linkClick(String linkName, By by) {
-    waitElementIsVisible(by);
+    waitElementIsDisplayed(by);
     WebElement link = getDriver().findElement(by);
     String href = link.getAttribute("href");
     link.click();
@@ -53,7 +64,7 @@ public class BasePage extends AbstractPage {
   }
 
   protected void verifyElementText(String text, By locator) throws Exception {
-    waitElementIsVisible(locator);
+    waitElementIsDisplayed(locator);
     String textElement = getDriver().findElement(locator).getText();
     if (!textElement.equals(text)) {
       String message = "invalid text of element.\nExpected:" + text
@@ -63,7 +74,7 @@ public class BasePage extends AbstractPage {
   }
 
   protected void verifyElement(By locator) {
-    waitElementIsVisible(locator);
+    waitElementIsDisplayed(locator);
     WebElement textElement = getDriver().findElement(locator);
     if (!textElement.isDisplayed()) {
       String message = "there is no element by locator:" + locator.toString();
@@ -72,8 +83,13 @@ public class BasePage extends AbstractPage {
     }
   }
 
+  protected boolean isElementDisplayed(By locator) {
+    WebElement textElement = getDriver().findElement(locator);
+    return textElement.isDisplayed();
+  }
+
   protected String getElementText(By locator) {
-    waitElementIsVisible(locator);
+    waitElementIsDisplayed(locator);
     return getDriver().findElement(locator).getText();
   }
 }

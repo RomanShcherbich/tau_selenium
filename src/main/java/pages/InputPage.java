@@ -5,8 +5,9 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 
 import org.apache.log4j.Logger;
+import pages.base.BasePage;
 
-public class InputPage extends BasePage{
+public class InputPage extends BasePage {
   public InputPage(WebDriver driver) {
     super(driver);
   }

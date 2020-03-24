@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 
 import org.apache.log4j.Logger;
+import pages.base.BasePage;
 
 public class LoginPage extends BasePage {
 
@@ -27,7 +28,7 @@ public class LoginPage extends BasePage {
     return new SecuredPage(getDriver());
   }
 
-  public void login(String username, String password) {
+  private void login(String username, String password) {
     sendTextLoginPage("username", username, usernameField);
     sendTextLoginPage("password", password, passwordField);
     log.info(buttonClick(buttonLoginText, buttonLogin));
